@@ -23,6 +23,10 @@ const CourseIdPage = async ({
         return redirect("/")
     }
 
+    const requiredFileds = [
+
+    ]
+
 
     return (
         <div>
