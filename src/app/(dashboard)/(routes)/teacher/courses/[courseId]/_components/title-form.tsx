@@ -11,6 +11,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 
 interface TitleFormProps {
@@ -31,6 +33,7 @@ const TitleForm = ({ initalData, courseId }: TitleFormProps) => {
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const toggleIsEdit = () => setIsEditing(prev => !prev);
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -39,7 +42,14 @@ const TitleForm = ({ initalData, courseId }: TitleFormProps) => {
 
     const { isSubmitting, isValid } = form.formState;
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        try {
+            await axios.patch(`/api/courses/${courseId}`)
+            toast.success("Course Updated");
+            toggleIsEdit();
+            router.refresh();
+        } catch (error) {
+            toast.error("Something went wrong");
+        }
     }
 
     return (
@@ -81,7 +91,12 @@ const TitleForm = ({ initalData, courseId }: TitleFormProps) => {
                             )}
                         />
                         <div className='flex items-center gap-x-2' >
-                            <Button></Button>
+                            <Button
+                                disabled={!isValid || isSubmitting}
+                                type='submit'
+                            >
+                                Save
+                            </Button>
                         </div>
                     </form>
                 </Form>
