@@ -38,7 +38,9 @@ const DescriptionForm = ({ initalData, courseId }: DescriptionFormProps) => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: initalData
+        defaultValues: {
+            description: initalData.description || ""
+        }
     });
 
     const { isSubmitting, isValid } = form.formState;
