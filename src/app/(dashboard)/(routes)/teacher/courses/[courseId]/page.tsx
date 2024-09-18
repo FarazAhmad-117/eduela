@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { IconBadge } from '@/components/icon-badge';
 import { LayoutDashboard } from 'lucide-react';
 import TitleForm from './_components/title-form';
+import DescriptionForm from './_components/description-form';
 
 const CourseIdPage = async ({
     params
@@ -47,15 +48,19 @@ const CourseIdPage = async ({
                     <span className='text-sm text-slate-500' >Complete all fields {completionText}</span>
                 </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-16' >
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 max-w-[1200px] mx-auto' >
                 <div>
                     <div className='flex items-center gap-x-2' >
                         <IconBadge icon={LayoutDashboard} />
                         <h2>Customize your course</h2>
                     </div>
                 </div>
-                <TitleForm 
-                    initalData = {course}
+                <TitleForm
+                    initalData={course}
+                    courseId={course.id}
+                />
+                <DescriptionForm
+                    initalData={course}
                     courseId={course.id}
                 />
             </div>
