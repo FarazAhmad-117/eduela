@@ -18,7 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 interface DescriptionFormProps {
     initalData: {
-        description?: string;
+        description: string | null;
     };
     courseId: string;
 }
