@@ -6,6 +6,7 @@ import { IconBadge } from '@/components/icon-badge';
 import { LayoutDashboard } from 'lucide-react';
 import TitleForm from './_components/title-form';
 import DescriptionForm from './_components/description-form';
+import ImageForm from './_components/image-form';
 
 const CourseIdPage = async ({
     params
@@ -48,7 +49,7 @@ const CourseIdPage = async ({
                     <span className='text-sm text-slate-500' >Complete all fields {completionText}</span>
                 </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 max-w-[1200px] mx-auto' >
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-16 max-w-[1200px] mx-auto' >
                 <div>
                     <div className='flex items-center gap-x-2' >
                         <IconBadge icon={LayoutDashboard} />
@@ -60,6 +61,10 @@ const CourseIdPage = async ({
                     courseId={course.id}
                 />
                 <DescriptionForm
+                    initalData={course}
+                    courseId={course.id}
+                />
+                <ImageForm
                     initalData={course}
                     courseId={course.id}
                 />
