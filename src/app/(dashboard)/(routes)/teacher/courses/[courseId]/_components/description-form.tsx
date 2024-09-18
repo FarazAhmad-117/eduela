@@ -18,7 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 interface DescriptionFormProps {
     initalData: {
-        description?: string;
+        description: string | null;
     };
     courseId: string;
 }
@@ -38,7 +38,9 @@ const DescriptionForm = ({ initalData, courseId }: DescriptionFormProps) => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: initalData
+        defaultValues: {
+            description: initalData.description || ""
+        }
     });
 
     const { isSubmitting, isValid } = form.formState;
