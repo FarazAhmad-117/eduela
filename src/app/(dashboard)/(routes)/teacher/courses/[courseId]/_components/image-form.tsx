@@ -47,6 +47,7 @@ const ImageForm = ({ initalData, courseId }: ImageFormProps) => {
     const { isSubmitting, isValid } = form.formState;
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
+            console.log('Here are values--->>', values);
             await axios.patch(`/api/courses/${courseId}`, values)
             toast.success("Course Updated");
             toggleIsEdit();
@@ -93,7 +94,6 @@ const ImageForm = ({ initalData, courseId }: ImageFormProps) => {
             {isEditing && (
                 <div>
                     <FileUpload
-                        endpoint='courseImage'
                         onChange={(url) => {
                             onSubmit({ imageUrl: url as string })
                         }}
