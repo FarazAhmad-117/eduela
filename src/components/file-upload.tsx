@@ -7,9 +7,10 @@ import toast from "react-hot-toast";
 
 interface FileUploadProps {
     onChange: (url?: string) => void;
+    type: "file" | "image";
 }
 
-export const FileUpload = ({ onChange }: FileUploadProps) => {
+export const FileUpload = ({ onChange, type }: FileUploadProps) => {
     const [isUploading, setIsUploading] = useState(false);
 
     const onDrop = useCallback(
@@ -28,8 +29,9 @@ export const FileUpload = ({ onChange }: FileUploadProps) => {
             formData.append("file", file);
 
             try {
+                let url = type === "image" ? "/api/upload/image" : "/api/upload/file";
                 // Send request to the Next.js API route
-                const response = await axios.post("/api/upload/file", formData, {
+                const response = await axios.post(url, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -54,7 +56,7 @@ export const FileUpload = ({ onChange }: FileUploadProps) => {
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
-        accept: { "image/*": [] } as Accept,
+        accept: type === "image" ? { "image/*": [] } : { "*": [] }, // Fixed accept condition
     });
 
     return (
