@@ -65,7 +65,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const completionText = `(${completedFields} / ${totalFileds})`;
 
   return (
-    <div className="p-6">
+    <div className="p-6 w-full max-w-[1000px] mx-auto">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-y-2">
           <h1 className="text-2xl font-medium">Course Setup</h1>
