@@ -92,8 +92,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             value: prev.id,
           }))}
         />
-      </div>
-      <div className="space-y-6 py-4">
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={ListCheck} />
