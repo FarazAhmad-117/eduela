@@ -5,12 +5,11 @@ import { Accept, useDropzone } from "react-dropzone";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-interface FileUploadProps {
+interface VideoUploadProps {
   onChange: (url?: string) => void;
-  type: "file" | "image";
 }
 
-export const FileUpload = ({ onChange, type }: FileUploadProps) => {
+export const VideoUpload = ({ onChange }: VideoUploadProps) => {
   const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = useCallback(
@@ -26,11 +25,10 @@ export const FileUpload = ({ onChange, type }: FileUploadProps) => {
 
       // Create FormData to send to your API route
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("video", file); // Changed to "video"
 
       try {
-        let url = type === "image" ? "/api/upload/image" : "/api/upload/file";
-        // Send request to the Next.js API route
+        const url = "/api/upload/video";
         const response = await axios.post(url, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -40,13 +38,13 @@ export const FileUpload = ({ onChange, type }: FileUploadProps) => {
         const data = response.data;
 
         if (data.success) {
-          onChange(data.cloudinaryResponse.secure_url);
-          toast.success("File uploaded successfully!");
+          onChange(data.cloudinaryResponse.secure_url); // Adjust to get video URL
+          toast.success("Video uploaded successfully!");
         } else {
-          throw new Error(data.message || "File upload failed");
+          throw new Error(data.message || "Video upload failed");
         }
       } catch (error: any) {
-        toast.error(`Error uploading file: ${error?.message}`);
+        toast.error(`Error uploading video: ${error?.message}`);
       } finally {
         setIsUploading(false);
       }
@@ -56,7 +54,7 @@ export const FileUpload = ({ onChange, type }: FileUploadProps) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: type === "image" ? { "image/*": [] } : { "*": [] }, // Fixed accept condition
+    accept: { "video/*": [] }, // Accept video files only
   });
 
   return (
@@ -70,7 +68,7 @@ export const FileUpload = ({ onChange, type }: FileUploadProps) => {
       {isUploading ? (
         <p>Uploading...</p>
       ) : (
-        <p>Drag &apos;n&apos; drop a file here, or click to select one</p>
+        <p>Drag &apos;n&apos; drop a video here, or click to select one</p>
       )}
     </div>
   );

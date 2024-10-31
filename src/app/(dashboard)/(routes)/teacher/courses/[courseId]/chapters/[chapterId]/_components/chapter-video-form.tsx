@@ -14,8 +14,7 @@ import {
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Chapter, MuxData } from "@prisma/client";
-import Image from "next/image";
-import { FileUpload } from "@/components/file-upload";
+import { VideoUpload } from "@/components/video-upload";
 
 interface ChapterVideoFormProps {
   initialData: Chapter & { muxData?: MuxData | null };
@@ -81,11 +80,10 @@ const ChapterVideoForm = ({
         ))}
       {isEditing && (
         <div>
-          <FileUpload
+          <VideoUpload
             onChange={(url) => {
               onSubmit({ videoUrl: url as string });
             }}
-            type="image"
           />
           <div className="text-xs text-muted-foreground mt-4">
             Upload this chapter&apos;s video
