@@ -54,7 +54,7 @@ const ChapterVideoForm = ({
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course image
+        Chapter Video
         <Button onClick={toggleIsEdit} variant={"ghost"}>
           {isEditing && <>Cancel</>}
           {!isEditing && !initialData.videoUrl && (

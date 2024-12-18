@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from "@clerk/nextjs";
 import { ToastProvider } from "@/components/providers/toaster-provider";
+import { ConfettiProvider } from "@/components/providers/confetti-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Edulela",
-  description: "A Smart Leaning Platform | Signup and get a lot of free learning resources.",
+  description:
+    "A Smart Leaning Platform | Signup and get a lot of free learning resources.",
 };
 
 export default function RootLayout({
@@ -21,9 +23,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ToastProvider />
+          <ConfettiProvider />
           {children}
         </body>
       </html>
-    </ClerkProvider >
+    </ClerkProvider>
   );
 }
