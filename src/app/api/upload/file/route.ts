@@ -31,9 +31,10 @@ export const POST = async (req: NextRequest) => {
 
         // Upload the file to Cloudinary
         const cloudinaryResponse = await cloudinary.uploader.upload(filePath, {
-            folder: "InternshipResumes",
+            // folder: "InternshipResumes",
             resource_type: 'raw'
         });
+
 
         if (!cloudinaryResponse) {
             return NextResponse.json(

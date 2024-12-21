@@ -56,14 +56,14 @@ export const FileUpload = ({ onChange, type }: FileUploadProps) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: type === "image" ? { "image/*": [] } : { "*": [] }, // Fixed accept condition
+    accept: type === "image" ? { "image/*": [] } : {}, // Fixed accept condition
   });
 
   return (
     <div
       {...getRootProps({
         className:
-          "border-2 border-dashed border-gray-400 rounded-lg p-4 text-center",
+          "border-2 min-h-32 border-dashed border-gray-400 rounded-lg p-4 text-center",
       })}
     >
       <input {...getInputProps()} />
