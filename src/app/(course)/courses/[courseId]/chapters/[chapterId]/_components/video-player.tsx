@@ -31,34 +31,34 @@ const VideoPlayer = ({
   completeOnEnd,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const confetti = useConfettiStore();
   const router = useRouter();
 
   const onEnd = async () => {
     try {
-      setIsLoading(true);
-      await axios.put(
-        `/api/courses/${courseId}/chapters/${chapterId}/progress`,
-        {
-          isCompleted: true,
+      if (completeOnEnd) {
+        await axios.put(
+          `/api/courses/${courseId}/chapters/${chapterId}/progress`,
+          {
+            isCompleted: true,
+          }
+        );
+
+        if (!nextChapterId) {
+          confetti.onOpen();
         }
-      );
+        toast.success("Progress Update Success!");
+        router.refresh();
 
-      if (!nextChapterId) {
-        confetti.onOpen();
-      }
-
-      if (nextChapterId) {
-        router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        if (nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        }
       }
 
       toast.success("Progress Updated!");
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
     }
   };
 
