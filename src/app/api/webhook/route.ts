@@ -3,8 +3,13 @@ import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { string } from "zod";
 
+
+const allOkList = [
+    "checkout.session.completed",
+    "charge.updated",
+    "charge.succeeded",
+]
 
 
 
@@ -25,10 +30,8 @@ export async function POST(req:Request){
     const session = event.data.object as Stripe.Checkout.Session;
     const userId = session?.metadata?.userId as string;
     const courseId = session?.metadata?.courseId as string;
-    console.log('Here is metadata', courseId, userId);
-    console.log("Event is", event.type);
-    if(event.type === "checkout.session.completed" || event.type === "charge.updated" ){
-        console.log("Here I am purchasing")
+    
+    if(allOkList.includes(event.type)){
         if(!userId || !courseId){
             return new NextResponse(`Webhook error: Missing metadata`, {status:400});
         }
@@ -38,7 +41,6 @@ export async function POST(req:Request){
                 courseId
             }
         });
-        console.log('purchase completed successfully', purchase);
     }else{
         return new NextResponse(`Webhook error: Unhanded event type`, {status:200});
     }
